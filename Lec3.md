@@ -1,14 +1,12 @@
-![equation](http://www.sciweavers.org/tex2img.php?eq=1%2Bsin%28mc%5E2%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=)
-
 Insertion Sort(A)							Cost		Times
-	for j = 2 to length(A)						C1		n
+	for j = 2 to length(A)					C1		n
 		do key = A[j]						C2		n-1
 		// insert A[j] into sorted sequence A[i...j-1]
-		i = j-1							C4		n-1
-		while i>0 and A[i]>key					C5		\Sum_{j=1}^{n} t_j
+		i = j-1								C4		n-1
+		while i>0 and A[i]>key				C5		\Sum_{j=1}^{n} t_j
 			do A[i+1]=A[i]					C6		\Sum_{j=1}^{n} (t_j-1)
-				i=1-1					C7		\Sum_{j=1}^{n} (t_j-1)
-			A[i+1]=key					C8		n-1
+				i=1-1						C7		\Sum_{j=1}^{n} (t_j-1)
+			A[i+1]=key						C8		n-1
 Let t_j = the number of times the while loop is executed for a given value of j.
 
 T(n)=c_1 n + c_2 (n-1) + c_4(n-1) + c_5 \Sum_{j=2}^{n} t_j + c_6 \Sum_{j=2}^{n} (t_j - 1) + c_7 \Sum_{j=1}^{n} (t_j-1) + c_8 (n-1)
@@ -50,3 +48,8 @@ A = [1 2 3]
 i = 4>lenght(A) stop
 
 We say insertion sort has a worst-case running time of \Theta(n^2).
+
+for a given function g(n), we denote by \Theta(g(n)) the set of functions \Theta(g(n))={f()n}: there exist positive constants c_1, c_2, n_0, such that 0 <= c_1 g(n) <= f(n) <= c_2 g(n) \forall n >= n_0}
+
+O(g(n)) for a given function g(n), O(g(n)) is the set of fucntions O(g(n))={f(n): there exists positive constants c, and n_0 such that 0 <= f(n) <= c g(n) for all n>= n_0}
+f(n) = \Theta (g(n)) implies f(n = O(g(n)))
