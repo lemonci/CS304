@@ -1,4 +1,4 @@
-import lec2_creditCard as CreditCard
+from lec2_creditCard import CreditCard
 class PredatoryCreditCard(CreditCard):
     """An extension to CreditCard that compounds interest and fees."""
     
