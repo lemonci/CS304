@@ -52,3 +52,10 @@ class Range:
             raise IndexError('index out of range')
             
         return self._start + k * self._step
+    
+"""Testing the class"""
+if __name__ == '__main__':
+    SI = SequenceIterator(['a', 'b', 'c'])
+    print(SI.__next__())
+    print(SI.__next__())
+    print(SI.__iter__())
