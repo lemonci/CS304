@@ -20,7 +20,18 @@ class BankAccount(metaclass=ABCMeta):
         self._customer = str(customer)
         self._bank = str(bank)
         self._balance = float(balance)
-       
+        
+    def get_customer(self):
+        """Return name of the customer."""
+        return self._customer
+    
+    def get_bank(self):
+        """Return the bank's name."""
+        return self._bank
+    
+    def get_balance(self):
+        """Return current balance."""
+        return self._balance
     def deposit(self, amount):
         self.balance += amount
     
