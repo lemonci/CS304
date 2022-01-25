@@ -10,7 +10,7 @@ class ChequingAccount(BankAccount):
         transaction_fee        the transaction fee during purchases
         """
         
-        super().__init__(customer, bank, balance)   # call super constructor
+        super().__init__(customer, bank, balance)     # call super constructor
         self._transaction_fee = transaction_fee
         
     def make_purchase(self, amount):
@@ -19,10 +19,10 @@ class ChequingAccount(BankAccount):
         Return False if charge was not processed.
         Return True and assess transaction fees if charge is proceeded.
         """
-        success = super().withdraw(amount)          # call inherited method
+        success = super().withdraw(amount)            # call inherited method
         if not success:
-            self._balance -= transaction_fee        # assess transaction fee
-        return success                              # caller expects return value
+            self._balance -= self._transaction_fee    # assess transaction fee
+        return success                                # caller expects return value
         
 if __name__ == '__main__':
     wallet = []
@@ -45,7 +45,6 @@ if __name__ == '__main__':
 #         print('Bank =', wallet[c].get_bank())
 #         print('Customer =', wallet[c].get_customer())
 #         print('Original Balance =', wallet[c].get_balance())
-
 
     for val in range(1, 5):
         wallet[0] += val*0.3

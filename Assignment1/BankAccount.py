@@ -44,7 +44,6 @@ class BankAccount(metaclass=ABCMeta):
             return False
             
     def __iadd__(self, amount):
-        print(self._balance)
         self._balance += amount
         
     def __isub__(self, amount):
