@@ -23,7 +23,8 @@ class ChequingAccount(BankAccount):
         if not success:
             self._balance -= self._transaction_fee    # assess transaction fee
         return success                                # caller expects return value
-        
+
+#Testing        
 if __name__ == '__main__':
     wallet = []
     wallet.append(ChequingAccount('John Bowman', 'California Saving',
@@ -33,18 +34,18 @@ if __name__ == '__main__':
     wallet.append(ChequingAccount('John Bowman', 'California Finance',
                               5000, 500))
     
-#     print(wallet[0] > wallet[1])
-#     print(wallet[1] > wallet[2])
-#     print(wallet[2] > wallet[0])
-#     
-#     print(wallet[0] < wallet[1])
-#     print(wallet[1] < wallet[2])
-#     print(wallet[2] < wallet[0])
-#     
-#     for c in range(3):
-#         print('Bank =', wallet[c].get_bank())
-#         print('Customer =', wallet[c].get_customer())
-#         print('Original Balance =', wallet[c].get_balance())
+    print('Card 1 Balance > Card 2 Balance: ', wallet[0] > wallet[1])
+    print('Card 2 Balance > Card 3 Balance: ',wallet[1] > wallet[2])
+    print('Card 3 Balance > Card 1 Balance: ',wallet[2] > wallet[0])
+    
+    print('Card 1 Balance < Card 2 Balance: ', wallet[0] < wallet[1])
+    print('Card 2 Balance < Card 3 Balance: ',wallet[1] < wallet[2])
+    print('Card 3 Balance < Card 1 Balance: ',wallet[2] < wallet[0])
+    
+    for c in range(3):
+        print('Bank =', wallet[c].get_bank())
+        print('Customer =', wallet[c].get_customer())
+        print('Original Balance =', wallet[c].get_balance())
 
     for val in range(1, 5):
         wallet[0] += val*0.3
@@ -84,6 +85,4 @@ if __name__ == '__main__':
         wallet[2].make_purchase(300*val)
         
     for c in range(3):
-        print('Card %d : Balance after purchase =' %(c+1), wallet[c].get_balance())        
-
-        print()
+        print('Card %d : Balance after purchase =' %(c+1), wallet[c].get_balance())

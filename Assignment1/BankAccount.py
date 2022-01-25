@@ -45,9 +45,11 @@ class BankAccount(metaclass=ABCMeta):
             
     def __iadd__(self, amount):
         self._balance += amount
+        return self
         
     def __isub__(self, amount):
         self._balance -= amount
+        return self
     
     def __lt__(self, accountB):
         return (self._balance < accountB.get_balance())
