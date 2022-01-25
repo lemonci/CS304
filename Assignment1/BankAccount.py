@@ -32,24 +32,26 @@ class BankAccount(metaclass=ABCMeta):
     def get_balance(self):
         """Return current balance."""
         return self._balance
+    
     def deposit(self, amount):
-        self.balance += amount
+        self._balance += amount
     
     def withdraw(self, amount):
-        if (self.balance - amount > 0):
-            self.balance -= amount
+        if (self._balance - amount > 0):
+            self._balance -= amount
             return True
         else:
             return False
             
-    def __iadd(self, amount)__:
-        self.balance += amount
+    def __iadd__(self, amount):
+        print(self._balance)
+        self._balance += amount
         
-    def __isub(self, amount)__:
-        self.balance -= amount
+    def __isub__(self, amount):
+        self._balance -= amount
     
     def __lt__(self, accountB):
-        return (self.amount < accountB.amount)
+        return (self._balance < accountB.get_balance())
         
     def __gt__(self, accountB):
-        return (self.amount > accountB.amount)
+        return (self._balance > accountB.get_balance())
