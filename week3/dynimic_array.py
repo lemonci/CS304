@@ -59,15 +59,6 @@ class DynamicArray:
                 self._n -= 1                    # we have one less item
                 return                          # exit immediately
             raise ValueError('value not found') # only reached if no match
-    
-"""Proposition 5.1: Let S be a sequence implemented by means of a dynamic array
-with initial capacity one, using the strategy of doubling the array size when full.
-The total time to perform a series of n append operations in S, starting from S being
-empty, is O(n).
-
-Proposition 5.2: Performing a series of n append operations on an initially empty
-dynamic array using a fixed increment with each resize takes Ω(n^2) time.
-"""
 
 
 if __name__ == '__main__':

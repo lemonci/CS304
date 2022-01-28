@@ -1,0 +1,39 @@
+Proposition 5.1: Let S be a sequence implemented by means of a dynamic array with initial capacity one, using the strategy of doubling the array size when full.
+The total time to perform a series of n append operations in S, starting from S being empty, is O(n).
+
+Proposition 5.2: Performing a series of n append operations on an initially empty dynamic array using a fixed increment with each resize takes Ω(n^2) time.
+
+for a given function g(n) denote O(g(n)) as the set of functions O(g(n))={f(n): exist positive constants c, n_0 such that 0 <= f(n) <= c g(n) for any n > n_0}
+
+Sequence types:
+list: referential, mutable
+tuple: referential, immutable
+string: compact array(not referential), immutable
+
+Non-mutating bahaviors
+Operation			Running Time		Notes
+len(data):			O(1)			A property the array maintains
+data[j]:			O(1)			Move j * byte/unit from the start
+data.count(value):		O(n)			Iterate the entire array to check every element == value or not.
+data.index(value):		O(k+1)			k is index of the leftmost occurence
+value in data: (T/F)		O(k+1)			k is index of the leftmost occurence
+data1 == data2			O(k+1)			k denotes the leftmost index which they disagree
+(Also!=, <, <=, >, >=)
+data[j:k]			O(k-j+1)
+data1 + data2(concatenate)	O(n_1+n_2)
+c * data			O(cn)			create a new array with with length cn
+
+Mutating bahaviors
+Operation			Running Time		Notes
+data[j] = val			O(1)			similar to data[j]
+data.append(val)		O(1)*
+data.insert(k, val)		O(n-k+1)*		Shuffle the elements after k one space backwards
+data.pop()			O(1)*
+data.pop(k)/del data[k]		O(n-k)*
+data.remove(value)		O(n)*
+data1.extend(data2)		O(n_2)*
+(Also data1 += data2)
+data.reverse()			O(n)
+data.sort()			O(n log n)
+*: amortized
+
