@@ -38,9 +38,28 @@ class DynamicArray:
         """Return new array with capacity c."""
         return (c * ctypes.py_object)()    
     
-arr = DynamicArray()
-arr.append(1)
+    def insert(self, k, value):
+        """Insert value at index k, shifting subsequent values rightward"""
+        # (for simplicity, we assume 0 <= k <= n in this version)
+        if self._n == self._capacity:           # not enough room
+            self._resize(2 * self._capacity)    # so double capacity
+        for j in range(self._n, k, -1):         # shift rightmoust first
+            self._A[j] = self._A[j-1]
+        self._A[k] = value                      # store newest element
+        self._n += 1
 
+    def remove(self, value):
+        """Remove first occurrence of value (or raise ValueError)"""
+        # note: we do not consider shrinking the dynamic array in this version
+        for k in range(self._n):
+            if self._A[k] == value:             # found a match!
+                for j in range(k, self._n - 1): # shift others to fill gap
+                    self._A[j] = self._A[j+1]
+                self._A[self._n - 1] = None     # help garbage collection
+                self._n -= 1                    # we have one less item
+                return                          # exit immediately
+            raise ValueError('value not found') # only reached if no match
+    
 """Proposition 5.1: Let S be a sequence implemented by means of a dynamic array
 with initial capacity one, using the strategy of doubling the array size when full.
 The total time to perform a series of n append operations in S, starting from S being
@@ -49,3 +68,14 @@ empty, is O(n).
 Proposition 5.2: Performing a series of n append operations on an initially empty
 dynamic array using a fixed increment with each resize takes Ω(n^2) time.
 """
+
+
+if __name__ == '__main__':
+    N = 100
+    data0 = [0]*N
+    data1 = [0]*N
+    data2 = [0]*N
+    for n in range(N):
+        data0.insert(0, None)
+        data1.insert(n // 2, None)
+        data2.insert(n, None)

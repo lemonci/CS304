@@ -20,7 +20,7 @@ class ChequingAccount(BankAccount):
         Return True and assess transaction fees if charge is proceeded.
         """
         success = super().withdraw(amount)            # call inherited method
-        if not success:
+        if success:
             self._balance -= self._transaction_fee    # assess transaction fee
         return success                                # caller expects return value
 
@@ -79,10 +79,13 @@ if __name__ == '__main__':
     for c in range(3):
         print('Card %d : Balance after withdraw =' %(c+1), wallet[c].get_balance())
     
-    for val in range(1, 2):
-        wallet[0].make_purchase(val)
-        wallet[1].make_purchase(20*val)
-        wallet[2].make_purchase(300*val)
+    for val in range(1, 17):
+        result = wallet[0].make_purchase(val)
+        print('Card 1 : Balance after purchase %d (Success: %r) =' %(val, result), wallet[0].get_balance())
+        result = wallet[1].make_purchase(20*val)
+        print('Card 2 : Balance after purchase %d (Success: %r) =' %(val, result), wallet[1].get_balance())
+        result = wallet[2].make_purchase(300*val)
+        print('Card 3 : Balance after purchase %d (Success: %r) =' %(val, result), wallet[2].get_balance())
         
-    for c in range(3):
-        print('Card %d : Balance after purchase =' %(c+1), wallet[c].get_balance())
+#    for c in range(3):
+#        print('Card %d : Balance after purchase =' %(c+1), wallet[c].get_balance())
