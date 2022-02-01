@@ -15,3 +15,18 @@ s.pop()		3		[5]
 s.is_empty()	False		[5]
 s.pop()		5		[]
 ...
+
+Operation 	Running time
+s.push(e)	O(1)*
+s.pop()		O(1)*
+s.top()		O(1)
+s.is_empty()	O(1)
+len(s)		O(1)
+
+Matching Parentheses using a stack
+1. init empty stack
+2. read characters until end
+3. if current char == '(' (opening parentheses), push char to stack
+4. elif current char == ')' (closinging parentheses) and stack is empty, raise ERROR
+5. 	else pop stack, if popped symbol does not match char, raise ERROR
+6. if at EOF and stack is not empty, raise ERROR
