@@ -1,0 +1,17 @@
+Stack
+Last-in, first out (LIFO)
+Formally, a stack is an ADT
+s.push(e)	# add e to top of stack
+s.pop()		# remove and return top element
+s.top()		# return reference to top element
+s.is_empty()	#
+len(s)
+
+Operation	Return Value	Stack content
+s.push(5)	-		[5]
+s.push(3)	-		[5, 3]
+len(s)		2		[5, 3]
+s.pop()		3		[5]
+s.is_empty()	False		[5]
+s.pop()		5		[]
+...
