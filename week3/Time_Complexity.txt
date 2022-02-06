@@ -29,8 +29,8 @@ data[j] = val			O(1)			similar to data[j]
 data.append(val)		O(1)*
 data.insert(k, val)		O(n-k+1)*		Shuffle the elements after k one space backwards
 data.pop()			O(1)*
-data.pop(k)/del data[k]		O(n-k)*
-data.remove(value)		O(n)*
+data.pop(k)/del data[k]		O(n-k)*			Similar to insert
+data.remove(value)		O(n)*			Removes the first matching element, then shuffle every element behind the element one space forward
 data1.extend(data2)		O(n_2)*
 (Also data1 += data2)
 data.reverse()			O(n)

@@ -1,0 +1,18 @@
+infix: 6 * ( 5 + ( 2 + 3 ) * 8 + 3 ) = 288
+postfix: 6 5 2 3 + 8 * + 3 + * = 288
+Evaluation postfix expr: using stack
+	read expr from left to right
+		if operand, push to stack
+		if operator, pop two values off stack
+			perform operations
+			push result back on stack
+
+infix: a + b * c + ( d * e + f) * g
+postifx: a b c * + d e * f + g * +
+Algorithm for converting infix to postfix:
+	1) if operand, plate in output
+	2) if we encounter an operator, place on stack, also stack left parathesis
+	3) if we encounter a right parathesis, pop stack and write symbols until we encounter corresponding left parathesis
+	4) if we see any other symbol, such as +, *, '(' we pop entries from stack until we find an entry of lower priority
+	5) when the popping is done, push operator to stack
+	6) if at end, pop entire stack and write to output
