@@ -116,3 +116,9 @@ s.pop()		O(1)
 s.top()		O(1)
 len(s)		O(1)
 is_empty()	O(1)
+
+Class Queue:
+	tail
+	head
+
+deque

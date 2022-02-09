@@ -1,0 +1,42 @@
+PositionalList ADT
+Why not use Node as position?
+1) complicates use of list
+2) dangerous to hand out wrong nodes
+3) lack of encapsulation
+
+class PositionalList(_DoublyLinkedBase):
+	# a sequential container of elements allowing positional access
+	class Position:
+	# abstraction representing location of single element
+		def __init__(self, container, node):
+            self._container = container
+            self._node = node
+        def element(self):
+            return self._node._element
+        def __eq__(self, other):
+            return type(other) is type(self) and other._node is self._node
+            
+    def _make_position(self, node):
+        # return position instance for node
+        if node is self._header or self._trailor:
+            return None
+        else:
+            return self.Position(self, node)
+    
+    def before(self, p):
+        node = self._validate(p)
+        return self._make_position(node.prev)
+        
+    def add_after(self, p, e):
+        origional = self._validate(p)
+        return self._inseert_between(e, original, original_next)
+        
+Advantages of arrays:
+1) O(1) time access to element based on index e = A[i]
+2) A.append() -> O(1)* constant faster than linked list for O(1) operations
+   list.add_last Node(1) pointers more time consuming
+3) less memory
+
+Advantages of linked list:
+1) worst case time down, O(1) appends
+2) O(1) insertion and deletions at arbitrary locations (assuming we already have the node).
