@@ -1,0 +1,94 @@
+def selection_sort(arr):	#incremental approach: sort one thing at one time
+	for i in range(len(arr)):
+		smallest = int
+		smallest_index = int
+		smallest_index = 0
+		for j in range(i, len(arr)):
+			if arr[j]<smallest:
+				smallest = arr[j]
+				smallest_index = j
+		temp = arr[smallest_index]
+		arr[i] = smallest_index
+		arr[smallest_index] = temp
+O(n^2)
+the maximum number of swaps is n.
+
+def insertion_sort(arr):
+	for i in range(1, len(arr)):
+		elem = arr[i]
+		j = i-1
+		while j > -1 and arr[j]>elem
+			arr[j+1] = arr[j]
+			j -= 1
+		arr[j+1] = elem
+
+O(n^2)
+the maximum number of swaps could be n^2.
+
+sorted advantage: easier to search (such as binary search), comparing and merging.
+
+Divide & Conquer:
+- recursive
+- break the problem down into  sub-problems similar but smaller in size.
+- combine solutions to the original problems to solve the original problem.
+
+1) Divide
+2) Conquer subproblems by solving them recursively
+3) Combine solutions to sub-problems into overall solution
+
+recursive function: fuction that calles itself
+
+factorial(n):
+	if n == 1
+		return 1
+	otherwise:
+		return factorial(n-1)*n
+
+Mergesort follows devide & conquer:
+1) Divide the array to be sorted into two subsequences of size
+2) Sort subsequences recursively using mergesort
+3) Merge two subsorted subsequences to produce final sorted array
+
+def merge_sort(A, p, r):	# A: array, p: first index, r: last index
+	if p < r:
+		q = (r-p)/2
+		merge_sort(A, p, q)
+		merge_sort(A, q+1, r)
+		merge(A, p, q, r)
+
+def merge(A, p, q, r):
+	n1 = q-p+1
+	n2 = r-q
+	L = []
+	R = []
+	for i in range(n1):
+		L.append(A[p+i])
+	for i in range(n2):
+		R.append(A[q+i+1])
+	L.append(inf)
+	R.append(inf)
+
+	i = 0
+	j = 0
+	for k in range(p, r+1):
+		if L[i] <= R[j]:
+			A[k] = L[i]
+			i += 1
+		else:
+			A[k] = R[j]
+			j += 1
+
+O(n logn)
+
+Analysis of merge sort:
+Assume n is a power of 2, each divide step yields two subsequnces of size exactly n/2
+Divide O(1)
+Conquer: recursively solve two sub problems each of size n/2 which contributes 2 * T(n/2)
+Combine: merge n elements subarray: O(n)
+O(n)+O(1) = O(n)
+T(n) = O(1) if n = 1
+	2T(n/2) + O(n) if n> 1
+
+T(n) = c if n = 1
+	2T(n/2) + c*n if n> 1
+where c represents time required to solve problems of size 1
