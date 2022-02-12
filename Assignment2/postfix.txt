@@ -16,3 +16,9 @@ Algorithm for converting infix to postfix:
 	4) if we see any other symbol, such as +, *, '(' we pop entries from stack until we find an entry of lower priority
 	5) when the popping is done, push operator to stack
 	6) if at end, pop entire stack and write to output
+
+Algorithm for converting postfix to infix:
+1) If  operand, put it onto the stack
+2) If operator, pop two elements from stack
+ 2a) Judge if there are any + or - inside the popped elements in the stack, if yes, add brackets to the relevant element
+3) Add the operator between the two popped elements, put the concatenated element back onto the stack
