@@ -95,3 +95,7 @@ class Expression():
         if _infix == '':
             _infix = post_to_in()
         return eval(_infix)
+    
+#Testing        
+if __name__ == '__main__':
+    Expression()
