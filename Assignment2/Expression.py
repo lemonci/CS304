@@ -13,7 +13,7 @@ class Expression():
             self._infix = input()
         elif (direction == 'post_to_in'):
             print('Input an infix expression, leave spaces around operands, operators and parenthesis:')
-            self._infix = input()
+            self._postfix = input()
         
     
     class _ArrayStack:
@@ -80,7 +80,7 @@ class Expression():
              
      def post_to_in():
         print('Input a post expression, leave spaces around operands, operators and parenthesis:')
-        _post = input().split()
+        _post = self._postfix.split()
         S = Expression._ArrayStack()
         for elem in _in:
             if elem not in '+-*/': # suppose operand
@@ -94,5 +94,5 @@ class Expression():
         
     def evaluate():
         if _infix == '':
-            _infix = in_to_post(_postfix)
+            _infix = post_to_in()
         return eval(_infix)
