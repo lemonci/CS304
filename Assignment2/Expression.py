@@ -79,7 +79,6 @@ class Expression():
         return output
              
      def post_to_in():
-        print('Input a post expression, leave spaces around operands, operators and parenthesis:')
         _post = self._postfix.split()
         S = Expression._ArrayStack()
         for elem in _in:
