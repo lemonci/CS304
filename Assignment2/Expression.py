@@ -5,6 +5,16 @@ class Empty(Exception):
 class Expression():
     # use the ArrayStack class from lecture 6 to perform conversions and evaluations.
     # stack class should be a private field of the Expression class.
+    _infix = ''
+    _postfix = ''
+    def __init__(self, input, direction):
+        if (direction == 'in_to_post'):
+            print('Input an infix expression, leave spaces around operands, operators and parenthesis:')
+            self._infix = input()
+        elif (direction == 'post_to_in'):
+            print('Input an infix expression, leave spaces around operands, operators and parenthesis:')
+            self._infix = input()
+        
     
     class _ArrayStack:
         """LIFO Stack implementation using a Python list as underlying storage."""
@@ -42,9 +52,8 @@ class Expression():
 #        def full_stack(self):
 #            return self._data
 
-    def in_to_post():
-        print('Input an infix expression, leave spaces around operands, operators and parenthesis: ')
-        _in = input().split()
+    def in_to_post(self):
+        _in = self._infix.split()
         output = '' 
         S = Expression._ArrayStack()
         S.push('(')         # Push “(“ onto Stack
@@ -68,6 +77,10 @@ class Expression():
                         output += S.pop()
                     S.push(elem)        # Add operator to Stack
         return output
-                
-    def post_to_in():
-        
+             
+'''     def post_to_in():
+        print('Input a post expression, leave spaces around operands, operators and parenthesis:')
+        _post = input().split()
+        S = Expression._ArrayStack()
+        for elem in _in:
+            '''
