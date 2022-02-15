@@ -17,7 +17,7 @@ class SavingsAccount(BankAccount):
         """The saving account will pay interest based on balance and interest rate.
         """
         self._balance += self._interest_rate * self._balance     # call inherited method
-        
+        j
 #Testing        
 if __name__ == '__main__':
     wallet = []

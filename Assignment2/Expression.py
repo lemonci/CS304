@@ -1,3 +1,9 @@
+'''
+The expression class can deal with operators +-*/ and numerical/algebrical operands, it does not have syntax checking functions.
+The user should leave spaces around operands, operators and parenthesis.
+To facilitate a two-way conversion, the converted expression also have spaces between operands, operators and parenthesis.
+'''
+
 class Empty(Exception):
     """Error attempting to access an element from an empty container."""
     pass
@@ -8,13 +14,12 @@ class Expression():
     _infix = ''
     _postfix = ''
     def __init__(self, input, direction):
-        if (direction == 'in_to_post'):
-            print('Input an infix expression, leave spaces around operands, operators and parenthesis:')
-            self._infix = input()
-        elif (direction == 'post_to_in'):
-            print('Input an infix expression, leave spaces around operands, operators and parenthesis:')
-            self._postfix = input()
-        
+        if (direction == '0'):
+            self._infix = input
+            self._postfix = self.in_to_post()
+        elif (direction == '1'):
+            self._postfix = input
+            self._infix = self.post_to_in()
     
     class _ArrayStack:
         """LIFO Stack implementation using a Python list as underlying storage."""
@@ -55,7 +60,7 @@ class Expression():
     def in_to_post(self):
         _in = self._infix.split()
         output = '' 
-        S = Expression._ArrayStack()
+        S = self._ArrayStack()
         S.push('(')         # Push “(“ onto Stack
         _in.append(')')     # and add “)” to the end of input.
         for elem in _in:    # Scan the infix expression from left to right
@@ -63,39 +68,55 @@ class Expression():
                 S.push(elem)    # push it onto Stack.)
             elif elem == ')':   # If a right parenthesis is encountered ,then:  
                 while S.top() != '(':
+                    output += ' '
                     output += S.pop()   # pop the stack and add it to output until a ‘(‘ is encountered
                 S.pop()      # remove the left parenthesis
             elif elem not in '+-*/':    # If an operand is encountered,
+                output += ' '
                 output += elem          # add it to output
             else:   #If an operator is encountered         
                 if elem in '+-':        # and add to output each operator
                     while S.top() != '(':  # (on the top of Stack) which has the same precedence as or higher precedence than operator.)
+                        output += ' '
                         output += S.pop()   # Repeatedly pop from Stack
                     S.push(elem)        # Add operator to Stack
                 else:
                     while S.top() not in '(+-':
+                        output += ' '
                         output += S.pop()
                     S.push(elem)        # Add operator to Stack
         return output
              
-     def post_to_in():
+    def post_to_in(self):
         _post = self._postfix.split()
-        S = Expression._ArrayStack()
-        for elem in _in:
-            if elem not in '+-*/': # suppose operand
-                S.push(elem)
-            else:
-                a = S.pop()
-                b = S.pop()
-                temp = '(' + a + elem + b + ')'
-                S.push(temp)
-            return S.pop()
+        S2 = self._ArrayStack()
+        for elem in _post:
+            if elem in '+-*/': # suppose operator
+                a = S2.pop()
+                b = S2.pop()
+                temp = '( ' + b + ' ' + elem + ' ' + a + ' )'
+                S2.push(temp)
+            else:   # suppose operand
+                S2.push(elem)
+                
+        return S2.pop()[2:-2]
         
-    def evaluate():
-        if _infix == '':
-            _infix = post_to_in()
-        return eval(_infix)
-    
+    def evaluate(self):
+        if self._infix == '':
+            self._infix = self.post_to_in()
+        try:
+            return eval(self._infix)
+        except:
+            return "the expression cannot be evaluated"
 #Testing        
 if __name__ == '__main__':
-    Expression()
+    print('Input an expression, leave spaces around operands, operators and parenthesis:')
+    expr = input()
+    # test case1: 6 * ( 5 + ( 2 + 3 ) * 8 + 3 )
+    # test case2: a b c * + d e * f + g * +
+    print('Input the direction: 0 for infix to postfix, 1 for postfix to infix')
+    drct = input()
+    test = Expression(expr, drct)
+    print('postfix: ', test.in_to_post())
+    print('infix: ', test.post_to_in())
+    print('evaluation: ', test.evaluate())
