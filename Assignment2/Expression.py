@@ -78,9 +78,21 @@ class Expression():
                     S.push(elem)        # Add operator to Stack
         return output
              
-'''     def post_to_in():
+     def post_to_in():
         print('Input a post expression, leave spaces around operands, operators and parenthesis:')
         _post = input().split()
         S = Expression._ArrayStack()
         for elem in _in:
-            '''
+            if elem not in '+-*/': # suppose operand
+                S.push(elem)
+            else:
+                a = S.pop()
+                b = S.pop()
+                temp = '(' + a + elem + b + ')'
+                S.push(temp)
+            return S.pop()
+        
+    def evaluate():
+        if _infix == '':
+            _infix = in_to_post(_postfix)
+        return eval(_infix)
