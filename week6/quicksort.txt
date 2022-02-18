@@ -28,3 +28,52 @@ def partition(A, p, r):
 	A[i+1] = temp
 	
 	return i
+
+But on average, quicksort is quicker than merge sort because merge sort takes more time per procedure.
+
+Proof the lower (Omega) of any comparison-based sorting algorithm is nlogn:
+Any compasison-based sort can be treated as a binary tree.
+
+def insertion_sort(1, len(arr)):
+	for i in range(1, len(arr)):
+		elem = arr[i]
+		j = i - 1
+		while j > -1 and arr[j] > elem:
+			arr [j + 1] = arr[j]
+			j - = 1
+		arr[j+1] = elem
+
+(0)a_1 : a_2?
+(1a) <=	Yes
+(1b) >
+
+(1)a_2 : a_3?
+(2a) <=
+(2b) > Yes
+
+(2)a_1 : a_3?
+(2a) <= 
+(2b) > Yes -> a_3, a_1, a_2
+
+The maximum height of the decision tree:
+Theorem: Any comparison-based sort requires Omega(n log n) comparisions in worst case.
+Proof: consider decision tree of height h with l reachable leaves corresponding to comparison sort of n elements because of n! permutations appears as some leaf we have n! < l, since a binary tree of height h has no more than 2^n leaves.
+we have n! <= l <= 2^h
+h >= log(n!) = Theta(n log(n))
+
+Counting sort: O(n) non-comparison based sort assume input A[1..n] of integers for each element x, count the number of elements less than x.
+# a stable sort: element with the same value will remain the original sequence.
+
+def counting_sort(A, B, k):
+	C = [0] * k
+	for j in range(len(A)):
+		C[A[j]=C[A[j]]+1
+	for i in range(1, k):
+		C[i] = C[i] + C[i-1]
+	for j in range(len(A)-1, -1, -1):
+		B[C[A[j]]]-1] = A[j]
+		C[A[j]] = C[A[i]]-1
+
+Radix_sort(A, d):
+	for i = 1:d
+		counting sort(A) with digit;

@@ -7,7 +7,7 @@ Evaluation postfix expr: using stack
 			perform operations
 			push result back on stack
 
-infix: a + b * c + ( d * e + f) * g
+infix: a + b * c + ( d * e + f ) * g
 postifx: a b c * + d e * f + g * +
 Algorithm for converting infix to postfix:
 	1) if operand, plate in output
