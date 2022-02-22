@@ -29,7 +29,7 @@ class PositionalList(_DoublyLinkedBase):
         
     def add_after(self, p, e):
         origional = self._validate(p)
-        return self._inseert_between(e, original, original_next)
+        return self._insert_between(e, original, original_next)
         
 Advantages of arrays:
 1) O(1) time access to element based on index e = A[i]
