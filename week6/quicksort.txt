@@ -3,7 +3,7 @@ QuickSort
 - worst case O(n^2): unbalanced partition
 - average sort of O(n logn)
 
-Divide: Partition the array A[g..r] into two possibily empty subarrays A[p..q-1], A[q+1..r] such that each element of A[p..q-1] is less than or equal to A[q] , which is in turn <= A[q+1..r] 
+Divide: Partition the array A[p..r] into two possibily empty subarrays A[p..q-1], A[q+1..r] such that each element of A[p..q-1] is less than or equal to A[q] , which is in turn <= A[q+1..r] 
 Conquer: sort two subarrays A[p..q-1], A[q+1..r] by recursive calls to quicksort
 Combine: not needed
 
