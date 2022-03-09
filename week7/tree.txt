@@ -1,0 +1,91 @@
+A tree is an ADT that stores elements hierachically.
+Tree T is a set of nodes storing elements such that the nodes have a parent-child relationship, which satisfying the following:
+1. If non-empty, it has a special node called the root.
+2. Each node V of T different from the root has a unique parent node W; every node with parent W is a child of W.
+3. Nodes without children are called leaves; nodes with children are called internals.
+
+Class Tree:
+"""Abstract base calss representing a tree strucuture"""
+    Class Position:
+        """An abstraction representing location of single element in the tree."""
+        def element(self):
+            raise error
+        def __eq__(self, other):
+            raise error
+        def __ne__(self, other):
+            return not(self == other )
+    def root(self):
+        raise error
+    def parent(self, p):
+        raise error
+    def num_children(self, p):
+        raise error
+    def children(self, p):
+        raise error
+    def __len__(self):
+        raise error
+    def is_root(self, p):
+        return self.root() == p
+    def is_leaf(self, p):
+        return self.num_children(p)==0
+    def is_empty(self):
+        return len(self) == 0
+
+Let p be a node in tree T. The depth of p is the number of ancesters of p excluding itself.
+def depth(self, p):
+    """return number of levels seperating p from the root"""
+    if self.is_root(p):
+        return 0
+    else:
+        return 1 + self.depth(self.parent(p))
+
+height of position p in T is also defined recursively.
+    if p is a leaf, height 0
+    otherwise, the height of p is one more than the maximum height of p's children.
+def _height(self):
+    # return height of tree, time complexity O(n^2)
+    return max(self.depth(p)) for p in self.positions() if self.is_leaf(p) 
+
+def _height2(self, p):
+    # return height of subtree located at position p, time complexity O(n)
+    if self.is_leaf(p):
+        return 0
+    else:
+        return 1 + max(self._height2(c) for c in self.children(p))
+
+Binary trees
+an ordered tree with properties:
+1. every node has at most 2 children
+2. each child node is labeled as a left or right child
+3. the left precedes the right child in order of children
+
+((((3+1)*3)/((9-5)+2))-((3*7(7-4))+6))
+Pasrsing...
+
+inorder - infix, preorder - prefix, postorder - postfix
+Class BinaryTree(Tree):
+    """abstract base class representing binary tree standfree"""
+    def left(self, p):
+        raise error
+    def right(self, p):
+        raise error
+    def sibling(self, p):
+        parent = self.parent(p)
+        if parent is None:
+            return None
+        else:
+            if p == self.left(parent):
+                return self.right(parent)
+            else:
+                return self.left(parent)
+    def children(self, p):
+        if self.left(p) is not None:
+            yield self.left(p)
+        if self.right(p) is not None:
+            yield self.right(p)
+
+left T be a nonempty binary tree and lef n, n_E, n_I, h as number of nodes, leaves, internal nodes, height
+1. h+1 <= n <= 2^(h+1)-1
+2. 1 <= n_E <=2^h
+3. h <= n_I <= 2^(h-1)
+4. log(n+1)-1 <= h <= n-1
