@@ -1,40 +1,100 @@
-1 class LinkedBinaryTree(BinaryTree):
-2 ”””Linked representation of a binary tree structure.”””
-3
-4 class Node: # Lightweight, nonpublic class for storing a node.
-5 slots = _element , _parent , _left , _right
-6 def init (self, element, parent=None, left=None, right=None):
-7 self. element = element
-8 self. parent = parent
-9 self. left = left
-10 self. right = right
-11
-12 class Position(BinaryTree.Position):
-13 ”””An abstraction representing the location of a single element.”””
-14
-15 def init (self, container, node):
-16 ”””Constructor should not be invoked by user.”””
-17 self. container = container
-18 self. node = node
-19
-20 def element(self):
-21 ”””Return the element stored at this Position.”””
-22 return self. node. element
-23
-24 def eq (self, other):
-25 ”””Return True if other is a Position representing the same location.”””
-26 return type(other) is type(self) and other. node is self. node
-27
-28 def validate(self, p):
-29 ”””Return associated node, if position is valid.”””
-30 if not isinstance(p, self.Position):
-31 raise TypeError( p must be proper Position type )
-32 if p. container is not self:
-33 raise ValueError( p does not belong to this container )
-34 if p. node. parent is p. node: # convention for deprecated nodes
-35 raise ValueError( p is no longer valid )
-36 return p. node
-37
-38 def make position(self, node):
-39 ”””Return Position instance for given node (or None if no node).”””
-40 return self.Position(self, node) if node is not None else None
+class Tree:
+    """Abstract base class representing a tree structure."""
+    
+    #--------------------nested Position class------------------------------
+    class Position:
+        """An abstraction representing the location of a single element."""
+        def element(self):
+            """Return the element stored at this Position."""
+            raise NotImplementedError('must be implemented by subclass')
+            
+        def __eq__(self, other):
+            """Return True if other Position represents the same location"""
+            raise NotImplementedError('must be implemented by subclass')
+
+        
+        def __ne__(self, other):
+            """Return True if other does not represent the smae location"""
+            raise NotImplementedError('must be implemented by subclass')
+            
+    #--------abstract methods that concrete subclass must support--------------
+    def root(self):
+        """Return Position representing the tree's root (or None if empty)."""
+        raise NotImplementedError('must be implemented by subclass')
+        
+    def parent(self, p):
+        """Return Position representing p's parent (or None if p is root)."""
+        raise NotImplementedError('must be implemented by subclass')
+    
+    def num_children(self, p):
+        """Return the number of children that Position p has."""
+        raise NotImplementedError('must be implemented by subclass')
+        
+    def children(self, p):
+        """Return the number of children that Position p has."""
+        raise NotImplementedError('must be implemented by subclass')
+        
+    def __len__(self):
+        """Return the total number of elements in the tree."""
+        raise NotImplementedError('must be implemented by subclass')
+
+    #--------concrete methods implemented in this class--------------
+    def is_root(self, p):
+        """Return True if Position p represents the root of the tree."""
+        return self.root() == p
+    
+    def is_leaf(self, p):
+        """Return True if Position p does not have any children"""
+        return self.num_children(p) == 0
+    
+    def is_empty(self):
+        """Return True if the tree is empty."""
+        return len(self) == 0
+    
+    def depth(self, p):
+        """Return the number of levels seperating Position p from the root."""
+        if self._is_root(p):
+            return 0
+        else:
+            return 1 + self.depth(self.parent(p))
+        
+    def _height(self, p):     # time is linear in size of subtree
+        """Return the height of the subtree rooted at Position p."""
+        if self.is_leaf(p):
+            return 0
+        else:
+            return 1 + max(self._height(c) for c in self.children(p))
+    
+    def height(self, p = None):
+        """Return the height of the subtree rooted at Position p
+        If p is None, return the height of the entire tree.
+        """
+        if p is None:
+            p = self.root()
+        return self._height(p) # start _height recursion
+    
+class GeneralTree(Tree):
+    """Abstract base class representing a general tree structure"""
+    # --------------------- additional abstract methods ---------------------
+    def c_list(self, p):
+        """Return a list containing p's children.
+        
+        Return None if p does not have a child
+        """
+        raise NotImplementedError('must be implemented by subclass')
+        
+    def sibling(self, p):
+        """Return Positions representing p's sibling (or None if no sibling)."""
+        parent = self.parent(p)
+        if parent is None:  # p must be the root
+            return None     # root has no sibling
+        elif len(parent.c_list) == 1: # p is the only child of its parent
+            return None     # p has no sibling
+        else:
+            for s in parent.c_list:
+                if s != p:
+                    yield s
+                        
+class LinkedTree(GeneralTree):
+    class _Node:    # Lightweight, nonpublic clss for stroing a node.
+        __slots__ = 'element', '_parent', 'c_list'
