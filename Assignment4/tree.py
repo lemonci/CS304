@@ -184,3 +184,11 @@ class LinkedTree(GeneralTree):
         self._size += 1
         node._c_list.append(self._Node(e, node))
         return self._make_position(node._c_list[-1])
+    
+#(a) Build the game tree
+t = LinkedTree()    # Establish the empty tree
+t._add_root([[None, None, None], [None, None, None], [None, None, None]])   # insert the root
+''' x = t.root()
+t._add_child(x, ['X', None, None], [None, None, None], [None, None, None])
+t.visit_child(x,0).element()
+'''
