@@ -1,0 +1,47 @@
+Priority Queue ADT
+Q.min()		return the minimum element
+heap: O(1)
+
+P.add(k, v)
+P.min()		return a tuple
+P.remove_min()	show the min and remove it
+P.is_empty()
+len(P)
+
+Unsorted Array
+min		O(n)
+remove_min	O(n) Actually 2n
+add		O(1)*
+len		O(1)
+is_empty	O(1)
+
+Sorted Array
+min		O(1)
+remove_min	O(n)
+add		O(n)
+len		O(1)
+is_empty	O(1)
+
+BST (if h = log(n))
+min		O(log(n))*
+remove_min	O(log(n))*
+add		O(log(n))
+len		O(1)
+is_empty	O(1)
+* if BST is balanced
+
+Heap
+min		O(1)
+remove_min	O(log(n))
+add		O(log(n))
+len		O(1)
+is_empty	O(1)
+
+Heap-order property: in a heap T for every position
+p, the key stored is >= to the key stored at p's parent
+The heap is a complete binary tree: levels 0, 1...,  h-1 of T have the maximum numbers of nodes possible, and the remaining nodes at level h reside in the leftmost positions.
+h = log(n)
+
+Bottom up heap instruction: build the heap in n steps instead of nlog(n)
+Build the leaf level and join them by new parents
+Justification: think about the maximum amount of bubble downs to happen. Sum all the total number of edges(as the pop down operations won't "overlap" the edges) in the tree, will get n.
