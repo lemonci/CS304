@@ -209,7 +209,7 @@ def build_game(r):
                 t._add_child(r, add_e)
         for c in range(t.num_children(r)):
             build_game(t.visit_child(r, c))
-            return
+#            return
             
 
 build_game(t.root())
