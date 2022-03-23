@@ -187,17 +187,18 @@ class LinkedTree(GeneralTree):
     
 #(a) Build the game tree
 t = LinkedTree()    # Establish the empty tree
-#t._add_root([[None, None, None], [None, None, None], [None, None, None]])   # insert the root
-
-#try 2x2 first
-t._add_root(np.asarray([None, None, None, None]))   # insert the root
+# add the root
+t._add_root(np.asarray([None, None, None, None, None, None, None, None, None]))
 
 
 def build_game(r):
     # tree root
     e = r.element() # root element
-    if (e[0] == e[1] != None) or (e[0] == e[2] != None) or (e[0] == e[3] != None):
-        return
+    if np.all((e != None)):
+        if (e[0] == e[1] == e[2]) or (e[3] == e[4] == e[5]) or (e[6] == e[7] == e[8]) \
+        or (e[0] == e[3] == e[6]) or (e[1] == e[4] == e[7]) or (e[2] == e[5] == e[8]) \
+        or (e[0] == e[4] == e[8]) or (e[2] == e[4] == e[6]): # cross win
+            return
     else:
         turn = 'X'
         if np.count_nonzero(e == 'X') > np.count_nonzero(e == 'O'):
@@ -209,8 +210,6 @@ def build_game(r):
                 t._add_child(r, add_e)
         for c in range(t.num_children(r)):
             build_game(t.visit_child(r, c))
-#            return
-            
 
 build_game(t.root())
 
