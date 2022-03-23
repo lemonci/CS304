@@ -164,7 +164,7 @@ class LinkedTree(GeneralTree):
         node = self._validate(p)
         return len(node._c_list)
     
-    def _add_root(self, e):
+    def add_root(self, e):
         """Place element e at the root of an empty tree and return new Position.
         
         Raise ValueError if tree nonempty.
@@ -174,7 +174,7 @@ class LinkedTree(GeneralTree):
         self._root = self._Node(e)
         return self._make_position(self._root)
     
-    def _add_child(self, p, e):
+    def add_child(self, p, e):
         """Create a new child for Position p, storing element e.
         
         Return the Position of new node.
@@ -188,7 +188,7 @@ class LinkedTree(GeneralTree):
 #(a) Build the game tree
 t = LinkedTree()    # Establish the empty tree
 # add the root
-t._add_root(np.asarray([None, None, None, None, None, None, None, None, None]))
+t.add_root(np.asarray([None, None, None, None, None, None, None, None, None]))
 
 
 def build_game(r):
@@ -207,7 +207,7 @@ def build_game(r):
             if e[i] == None:
                 add_e = np.copy(e)
                 add_e[i] = turn
-                t._add_child(r, add_e)
+                t.add_child(r, add_e)
         for c in range(t.num_children(r)):
             build_game(t.visit_child(r, c))
 
