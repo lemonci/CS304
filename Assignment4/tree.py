@@ -211,10 +211,39 @@ def build_game(r):
         for c in range(t.num_children(r)):
             build_game(t.visit_child(r, c))
 
-build_game(t.root())
+def postorder(tree, p):
+    """Generate an inorder iteration of positions in subtree rooted at p."""
+    if tree.num_children(p) == 0:
+        return p
+    else: # if a child exists, traverse its subtree
+        for i in range(tree.num_children(p)):
+            other = tree.visit_child(p, i)
+            postorder(tree, other)
+            print('Press enter to see next element')
+            expr = input()
+            if expr == '':
+                print(other.element().reshape(3,3))
+        return p
 
-#def add_children(position, )
-''' x = t.root()
-t._add_child(x, ['X', None, None], [None, None, None], [None, None, None])
-t.visit_child(x,0).element()
-'''
+if __name__ == '__main__':
+    # Part 1
+    build_game(t.root())
+    
+    # Part 2
+    print('Print out the traversal of the tree: 0 for breadth-first OR 1 for depth-first')
+    expr = input()
+    print('\n')
+    if expr == '0': # breadth-first
+        q = [t.root()] #
+        while len(q) != 0:
+            p = q.pop(0)
+            for i in range(t.num_children(p)):
+                q.append(t.visit_child(p, i))
+            print('Press enter to see next element')
+            expr = input()
+            if expr == '':
+                print(p.element().reshape(3,3))
+                print('\n')
+                
+    elif expr == '1': # depth-first
+        postorder(t, t.root())
