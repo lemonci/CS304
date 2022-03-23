@@ -1,0 +1,39 @@
+Map ADT (associative array)
+M[k]: return value 'v' in the Map. # dictionary
+M[k] = r: associate value v with k in the map.
+del M[k]: 
+len(M)
+iter(M)
+
+BST: M[k] & M[k] = v O(log(n))
+Hash function: Mapping + Compression function
+
+The modulus number should be a prime, because any interger shares a common factor with table size will be hashed into an index that is a multiple of this factor.
+
+int hash(string key, int tableSize){
+	int hashVal = 0;
+	for (charch: key)
+		hashVal += ch;
+	return hashVal % tableSize;
+}
+
+if TableSize = 10,007, assume keys are 8 chars or less. max ascii vluae is 127. hashVal has max 1016. Waste of space.
+
+int hash(string key, int tableSize){
+	return (key[0]+27*key[1]+729*key[2]) % tableSize;
+}
+It will generate collations frequently.
+
+int hash(string key, int tableSize){
+	unsigned int hashVal = 0;
+	for (char ch: key)
+		hashVal = 37 * hashval + ch; // polynomial hash code
+	
+	return hashVal % tableSize;
+}
+
+deal with collations:
+Seperate chaining
+Probing: linear (hardly used) & quadratic
+	lambda = load factor: how full the talbe is.
+	inserting using linear probling: 1/2(1+1/(1-lambda)^2)

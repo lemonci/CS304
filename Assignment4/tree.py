@@ -158,7 +158,7 @@ class LinkedTree(GeneralTree):
         """Return the Position of p's nth child (or None if no child)."""
         node = self._validate(p)
         return self._make_position(node._c_list[n])
-    _
+    
     def num_children(self, p):
         """Return the number of children of Position p."""
         node = self._validate(p)
@@ -175,7 +175,7 @@ class LinkedTree(GeneralTree):
         return self._make_position(self._root)
     
     def _add_child(self, p, e):
-        """Create a new left child for Position p, storing element e.
+        """Create a new child for Position p, storing element e.
         
         Return the Position of new node.
         Raise ValueError if Position p is invalide or p already has a left child.
@@ -187,7 +187,34 @@ class LinkedTree(GeneralTree):
     
 #(a) Build the game tree
 t = LinkedTree()    # Establish the empty tree
-t._add_root([[None, None, None], [None, None, None], [None, None, None]])   # insert the root
+#t._add_root([[None, None, None], [None, None, None], [None, None, None]])   # insert the root
+
+#try 2x2 first
+t._add_root(np.asarray([None, None, None, None]))   # insert the root
+
+
+def build_game(r):
+    # tree root
+    e = r.element() # root element
+    if (e[0] == e[1] != None) or (e[0] == e[2] != None) or (e[0] == e[3] != None):
+        return
+    else:
+        turn = 'X'
+        if np.count_nonzero(e == 'X') > np.count_nonzero(e == 'O'):
+            turn = 'O'
+        for i in range(len(e)):
+            if e[i] == None:
+                add_e = np.copy(e)
+                add_e[i] = turn
+                t._add_child(r, add_e)
+        for c in range(t.num_children(r)):
+            build_game(t.visit_child(r, c))
+            return
+            
+
+build_game(t.root())
+
+#def add_children(position, )
 ''' x = t.root()
 t._add_child(x, ['X', None, None], [None, None, None], [None, None, None])
 t.visit_child(x,0).element()
