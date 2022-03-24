@@ -190,15 +190,14 @@ t = LinkedTree()    # Establish the empty tree
 # add the root
 t.add_root(np.asarray([None, None, None, None, None, None, None, None, None]))
 
-
 def build_game(r):
     # tree root
     e = r.element() # root element
-    if np.all((e != None)):
-        if (e[0] == e[1] == e[2]) or (e[3] == e[4] == e[5]) or (e[6] == e[7] == e[8]) \
-        or (e[0] == e[3] == e[6]) or (e[1] == e[4] == e[7]) or (e[2] == e[5] == e[8]) \
-        or (e[0] == e[4] == e[8]) or (e[2] == e[4] == e[6]): # cross win
-            return
+    
+    if (e[0] == e[1] == e[2] != None) or (e[3] == e[4] == e[5] != None) or (e[6] == e[7] == e[8]!= None) \
+    or (e[0] == e[3] == e[6] != None) or (e[1] == e[4] == e[7] != None) or (e[2] == e[5] == e[8] != None) \
+    or (e[0] == e[4] == e[8] != None) or (e[2] == e[4] == e[6] != None): # cross win
+        return
     else:
         turn = 'X'
         if np.count_nonzero(e == 'X') > np.count_nonzero(e == 'O'):
@@ -210,6 +209,7 @@ def build_game(r):
                 t.add_child(r, add_e)
         for c in range(t.num_children(r)):
             build_game(t.visit_child(r, c))
+
 
 def postorder(tree, p):
     """Generate an inorder iteration of positions in subtree rooted at p."""
