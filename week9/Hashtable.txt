@@ -37,3 +37,4 @@ Seperate chaining
 Probing: linear (hardly used) & quadratic
 	lambda = load factor: how full the talbe is.
 	inserting using linear probling: 1/2(1+1/(1-lambda)^2)
+
