@@ -1,45 +1,45 @@
 import random
 from random import shuffle 
 class BST:
-    def __init__(self, val = None):
+    def __init__(self, pair = None):
         self.left = None
         self.right = None
-        self.val = val
+        self.pair = pair
         
-    def insert(self, val):
-        if not self.val:
-            self.val = val
+    def insert(self, pair):
+        if not self.pair:
+            self.pair = pair
             return
-        if self.val == val:
+        if self.pair[0] == pair[0]:
             return
-        if val[0] < self.val:
+        if pair[0] < self.pair[0]:
             if self.left:
-                self.left.insert(val)
+                self.left.insert(pair)
                 return
-            self.left = BST(val)
+            self.left = BST(pair)
             return
         if self.right:
-            self.right.insert(val)
+            self.right.insert(pair)
             return
-        self.right = BST(val)
+        self.right = BST(pair)
         
     def get_min(self):
         current = self
         while current.left is not None:
             current = current.left
-        return current.val[0]
+        return current.pair[0]
     def get_max(self):
         current = self
         while current.right is not None:
             current = current.right
-        return current.val[0]
+        return current.pair[0]
     def delete(self, val):
         if self == None:
             return self
-        if val < self.val:
+        if val < self.pair[0]:
             self.left = self.left.delete(val)
             return self
-        if val > self.val:
+        if val > self.pair[0]:
             self.right = self.right.delete(val)
             return self
         if self.right == None:
@@ -49,13 +49,13 @@ class BST:
         min_larger_node = self.right
         while min_larger_node:
             min_larger_node = min_larger_node.left
-        self.val = min_larger_node.val
+        self.pair = min_larger_node.pair
         self.right = self.right.delete(min_larger_node.val)
         return self
     def exists(self, val):
-        if val == self.val[0]:
+        if val == self.pair[0]:
             return True
-        if val < self.val[0]:
+        if val < self.pair[0]:
             if self.left == None:
                 return False
             return self.left.exists(val)
