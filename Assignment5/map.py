@@ -263,7 +263,7 @@ class ProbeHashMap(HashMapBase):
             self._table[s] = self._Item(k, v)   # insert new item
             self._n += 1                        # size has increased
         else:
-            self._table[s]._vale = v            # overwrite existing
+            self._table[s]._value = v            # overwrite existing
             
     def _bucket_delitem(self, j, k):
         found, s = self._find_slot(j, k)
@@ -289,6 +289,15 @@ for key in keys:
 # for item in dic:
 #     tree.insert(item)
 # =============================================================================
-c = ChainHashMap()
-for item in dic:
-    c[item[0]] = item[1]
+
+# ===========================insertion for  Hash Table (Chain)=================
+# c = ChainHashMap()
+# for item in dic:
+#     c[item[0]] = item[1]
+# =============================================================================
+
+# ===========================insertion for  Hash Table (Chain)=================
+# p = ProbeHashMap()
+# for item in dic:
+#     p[item[0]] = item[1]
+# =============================================================================
