@@ -1,0 +1,78 @@
+Graphs
+A graph G consists of a set of vertices V and a set of edges E
+Each edge is a pair of vertices (v, w), where v, w in V
+Vertex v is adjacent to vertex w if and only if there is an edge between them. (v, w) in E. 
+A path in a graph is a sequence of vertices w_1, w_2, w_3, ..., w_N such that (w_i, w_i+1) in E.
+
+Adjacency matrix
+Adjacency list
+
+Topological Sort
+produces ordering of vertices in a DAG such that if there is a path from v_i to v_j, then v_i appears after v_j in ordering.
+indegree of vertex v is number of edges (u, v).
+topsort(){
+    for (int (counter = 0) counter < NUM_VERTS; counter++){
+        Vertex v: findVertexOfIndegreeZero();
+        V.topNvm = counter;
+        for each Vertex w adjacent to V:
+            w.indegree--;
+    }
+}
+
+Time Complextity O(V^2)
+
+Optimize findVertexOfIndegreeZero():
+topSort(){
+    Queue<vertex> q;
+    int counter = 0;
+    for each Vertex V:
+        if (v.indegree == 0)
+            q.enque(V);
+    while(! q.is_empty()){
+        vertex v = q.dequeue();
+        v.topNum = ++counter;
+        for each vertex w adjacent to v;
+             if(--w.indegree == 0)
+                 q.enqueue(w);
+    }
+}
+Time Complexity O(|V|+|E|)
+
+Shortest Path Algorithm
+Single Source Shortest Path:
+    given input G = (V, E) weighted graph, and a distinguished vertex s, find shortest weighted path from s to all other vertices in V.
+unweighted(vertex s){
+    for each vetex v{
+        v.dist = inf;
+        v.known = false;
+    }
+    s.dist = 0;
+    for (int currdist = 0; currdist < Num_Vertices; currdist++){
+        for each vertext v
+            if(!v.known && v.dist == currdist){
+                 if w.dist == inf{
+                      w.dist = currdist + 1;
+                      w.path = r;
+               }
+         }
+    }
+}
+Time Complextity O(V^2)
+
+unweighted(Vertex s){
+    Queue<vertex> q;
+    for each Vertex v:
+         v.dist = inf;
+    s.dist = 0;
+    q.enqueue(s);
+    while (! q.is_empty()){
+        Vertex v = q.dequeue();
+        for(each Vertex w adjacent to v){
+             if (w.dist = inf){
+                 w.dist = v.dist + 1;
+                 w.path = v;
+                 q.enqueue(w)
+            }
+        }
+    }
+}
