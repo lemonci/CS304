@@ -1,5 +1,7 @@
 import random
-from random import shuffle 
+from random import shuffle, randrange
+from collections.abc import MutableMapping
+
 #1) BST (binary search tree)
 class BST:
     def __init__(self, pair = None):
@@ -104,7 +106,7 @@ class MapBase(MutableMapping):
     """Our own abstract base class that includes a nonpublic Item class."""
 #------------------------------- nested Item class -------------------------------
     class _Item:
-    """Lightweight composite to store key-value pairs as map items."""
+        """Lightweight composite to store key-value pairs as map items."""
         __slots__ = '_key', '_value'
         def __init__(self, k, v):
             self._key = k
@@ -162,7 +164,7 @@ class HashMapBase(MapBase):
         self._table = cap * [None]
         self._n = 0                         # number of entries in the map
         self._prime = p                     # prime for MAD compression
-        self._sacle = 1 + randrange(p-1)    # scale from 1 to p-1 for MAD
+        self._scale = 1 + randrange(p-1)    # scale from 1 to p-1 for MAD
         self._shift = randrange(p)          # shift from 0 to p-1 for MAD
 
     def _hash_function(self, k):
@@ -184,11 +186,11 @@ class HashMapBase(MapBase):
     def __delitem__(self, k):
         j = self._hash_function(k)
         self._bucket_delitem(j, k) # may raise KeyError
-        self._n −= 1
+        self._n -= 1
         
-    def resize(self, c): # resize bucket array to capacity c
+    def _resize(self, c): # resize bucket array to capacity c
         old = list(self.items( )) # use iteration to record existing items
-        self._table = c [None] # then reset table to desired capacity
+        self._table = c * [None] # then reset table to desired capacity
         self._n = 0 # n recomputed during subsequent adds
         for (k,v) in old:
             self[k] = v # reinsert old key-value pair
@@ -197,7 +199,7 @@ class HashMapBase(MapBase):
 class ChainHashMap(HashMapBase):
     # Hash map implemented with separate chaining for collision resolution.
     def _bucket_getitem(self, j, k):
-        bucket = self. table[j]
+        bucket = self._table[j]
         if bucket is None:
             raise KeyError( 'Key Error: '+ repr(k)) # no match found
         return bucket[k] # may raise KeyError
@@ -205,13 +207,13 @@ class ChainHashMap(HashMapBase):
     def _bucket_setitem(self, j, k, v):
         if self._table[j] is None:
             self._table[j] = UnsortedTableMap( ) # bucket is new to the table
-        oldsize = len(self. table[j])
+        oldsize = len(self._table[j])
         self._table[j][k] = v
         if len(self._table[j]) > oldsize: # key was new to the table
-            self. n += 1 # increase overall map size
+            self._n += 1 # increase overall map size
 
     def _bucket_delitem(self, j, k):
-        bucket = self. table[j]
+        bucket = self._table[j]
         if bucket is None:
             raise KeyError('Key Error: '+ repr(k)) # no match found
         del bucket[k] # may raise KeyError
@@ -255,7 +257,7 @@ class ProbeHashMap(HashMapBase):
             raise KeyError('Key Error: ' + repr(k)) # no match found
         return self._table[s]._value
         
-    def _bucket_setitem(self, j, km v):
+    def _bucket_setitem(self, j, k, v):
         found, s = self._find_slot(j, k)
         if not found:
             self._table[s] = self._Item(k, v)   # insert new item
@@ -287,3 +289,6 @@ for key in keys:
 # for item in dic:
 #     tree.insert(item)
 # =============================================================================
+c = ChainHashMap()
+for item in dic:
+    c[item[0]] = item[1]
