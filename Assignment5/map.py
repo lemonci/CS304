@@ -97,110 +97,62 @@ class BST:
             raise KeyError("%s is not in the tree." % key)
         self.right.__setitem__(key, val)
 
+# HashMapBase
 
-#4) skip list  
-class SkipList(object):
-    class Node(object):
-        # Class to implement node
-        def __init__(self, pair, level):
-            self.pair = pair
-            # list to hold references to node of different level 
-            self.forward = [None]*(level+1)
 
-    def __init__(self, max_lvl, P):
-        # Maximum level for this skip list
-        self.MAXLVL = max_lvl
-  
-        # P is the fraction of the nodes with level 
-        # i references also having level i+1 references
-        self.P = P
-  
-        # create header node and initialize key to -1
-        self.header = self.createNode(self.MAXLVL, -1)
-  
-        # current level of skip list
-        self.level = 0
-      
-    # create  new node
-    def createNode(self, lvl, pair):
-        n = self.Node(pair, lvl)
-        return n
-      
-    # create random level for node
-    def randomLevel(self):
-        lvl = 0
-        while random.random()<self.P and \
-              lvl<self.MAXLVL:lvl += 1
-        return lvl
-  
-    # insert given key in skip list
-    def insertElement(self, pair):
-        # create update array and initialize it
-        update = [None]*(self.MAXLVL+1)
-        current = self.header
-  
-        '''
-        start from highest level of skip list
-        move the current reference forward while key 
-        is greater than key of node next to current
-        Otherwise inserted current in update and 
-        move one level down and continue search
-        '''
-        for i in range(self.level, -1, -1):
-            while current.forward[i] and \
-                  current.forward[i].key < key:
-                current = current.forward[i]
-            update[i] = current
-  
-        ''' 
-        reached level 0 and forward reference to 
-        right, which is desired position to 
-        insert key.
-        ''' 
-        current = current.forward[0]
-  
-        '''
-        if current is NULL that means we have reached
-           to end of the level or current's key is not equal
-           to key to insert that means we have to insert
-           node between update[0] and current node
-       '''
-        if current == None or current.key != key:
-            # Generate a random level for node
-            rlevel = self.randomLevel()
-  
-            '''
-            If random level is greater than list's current
-            level (node with highest level inserted in 
-            list so far), initialize update value with reference
-            to header for further use
-            '''
-            if rlevel > self.level:
-                for i in range(self.level+1, rlevel+1):
-                    update[i] = self.header
-                self.level = rlevel
-  
-            # create new node with random level generated
-            n = self.createNode(rlevel, key)
-  
-            # insert node by rearranging references 
-            for i in range(rlevel+1):
-                n.forward[i] = update[i].forward[i]
-                update[i].forward[i] = n
-  
-            print("Successfully inserted key {}".format(key))
-  
-    # Display skip list level wise
-    def displayList(self):
-        print("\n*****Skip List******")
-        head = self.header
-        for lvl in range(self.level+1):
-            print("Level {}: ".format(lvl), end=" ")
-            node = head.forward[lvl]
-            while(node != None):
-                print(node.key, end=" ")
-                node = node.forward[lvl]
-            print("")
+class MapBase(MutableMapping):
+    """Our own abstract base class that includes a nonpublic Item class."""
+#------------------------------- nested Item class -------------------------------
+    class Item:
+    """Lightweight composite to store key-value pairs as map items."""
+        slots = _key , _value
+        def init (self, k, v):
+            self. key = k
+            self. value = v       
+        def eq (self, other):
+            return self. key == other. key # compare items based on their keys
+        def ne (self, other):
+            return not (self == other) # opposite of eq
+        def lt (self, other):
+            return self. key < other. key # compare items based on their keys
+
+class HashMapBase(MapBase):
+    """Abstract base class for map using hash-table with MAD compression."""
+    def __init__(self, cap=11, p = 109345121):
+        """Create an empty hash-table map."""
+        self._table = cap * [None]
+        self._n = 0                         # number of entries in the map
+        self._prime = p                     # prime for MAD compression
+        self._sacle = 1 + randrange(p-1)    # scale from 1 to p-1 for MAD
+        self._shift = randrange(p)          # shift from 0 to p-1 for MAD
+
+    def _hash_function(self, k):
+        return (hash(k)*self._scale + self._shift) % self._prime % len(self._table)
+    
+    def __len__(self):
+        return self._n
+    
+    def __getiem__(self, k):
+        j = self._hash_function(k)
+        return self._bucket_getitem(j, k)   # may raise KeyError
+
+    def __setitem__(self, k, v):
+        j = self._hash_function(k)
+        self._bucket_setitem(j, k, v)               # subroutine maintains self._n
+        if self._n > len(self._table) // 2:         # keep load factor <= 0.5
+            self._resize(2 * len(self._table)-1)    # number 2^x - 1 is often prime
+            
+    def __delitem__(self, k):
+29 j = self. hash function(k)
+30 self. bucket delitem(j, k) # may raise KeyError
+31 self. n −= 1
+32
+33 def resize(self, c): # resize bucket array to capacity c
+34 old = list(self.items( )) # use iteration to record existing items
+35 self. table = c [None] # then reset table to desired capacity
+36 self. n = 0 # n recomputed during subsequent adds
+37 for (k,v) in old:
+38 self[k] = v # reinsert old key-value pair
     
 LEN = 10
 keys = list(range(LEN))
