@@ -53,10 +53,10 @@ class BST:
         if self.left == None:
             return self.right
         min_larger_node = self.right
-        while min_larger_node:
+        while min_larger_node.left != None:
             min_larger_node = min_larger_node.left
         self.pair = min_larger_node.pair
-        self.right = self.right.__delitem__(min_larger_node.key)
+        self.right = self.right.__delitem__(min_larger_node.pair[0])
         return self
     def exists(self, key):
         if key == self.pair[0]:
@@ -296,7 +296,7 @@ for key in keys:
 tree = BST()
 c = ChainHashMap()
 p = ProbeHashMap()
-# =========================== Insertion ==============================
+# ============================== Insert ==============================
 
 for i in range(LEN):
 # ============================== BST =================================
@@ -317,7 +317,7 @@ for i in range(LEN):
 # ====================================================================
 
 
-# =========================== Insertion & Visit ======================
+# =========================== Insert & Visit =========================
 
 for i in range(LEN):
 # ============================== BST =================================
@@ -336,6 +336,26 @@ for i in range(LEN):
     t = time.process_time()
     p[dic[i][0]] = dic[i][1]
     v = p[dic[i][0]]
+    t = time.process_time() - t
+    t_p[i] = t
+# ====================================================================
+
+# ============================== Delete ==============================
+
+for i in range(LEN):
+# ============================== BST =================================
+    t = time.process_time()
+    del tree[dic[i][0]]
+    t = time.process_time() - t
+    t_tree[i] = t
+# =========================== Hash Table (Chain)======================
+    t = time.process_time()
+    del c[dic[i][0]]
+    t = time.process_time() - t
+    t_c[i] = t
+# =========================== Hash Table (Chain)======================
+    t = time.process_time()
+    del p[dic[i][0]]
     t = time.process_time() - t
     t_p[i] = t
 # ====================================================================
