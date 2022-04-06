@@ -278,6 +278,8 @@ class ProbeHashMap(HashMapBase):
         for j in range(len(self._table)):
             if not self._is_available(j):
                 yield self._table[j]._key
+                
+                
 LEN = 10000
 keys = list(range(LEN))
 shuffle(keys)
@@ -290,32 +292,54 @@ dic = []
 for key in keys:
     dic.append((key, random.random()))
 
-# ===========================insertion for BST==============================
+
 tree = BST()
+c = ChainHashMap()
+p = ProbeHashMap()
+# =========================== Insertion ==============================
+
 for i in range(LEN):
+# ============================== BST =================================
     t = time.process_time()
     tree.insert(dic[i])
     t = time.process_time() - t
     t_tree[i] = t
-# =============================================================================
-
-# ===========================insertion for  Hash Table (Chain)=================
-c = ChainHashMap()
-for i in range(LEN):
+# =========================== Hash Table (Chain)======================
     t = time.process_time()
-    c[item[0]] = item[1]
+    c[dic[i][0]] = dic[i][1]
     t = time.process_time() - t
     t_c[i] = t
-# =============================================================================
-
-# ===========================insertion for  Hash Table (Chain)=================
-p = ProbeHashMap()
-for i in range(LEN):
+# =========================== Hash Table (Chain)======================
     t = time.process_time()
-    p[item[0]] = item[1]
+    p[dic[i][0]] = dic[i][1]
     t = time.process_time() - t
     t_p[i] = t
-# =============================================================================
+# ====================================================================
+
+
+# =========================== Insertion & Visit ======================
+
+for i in range(LEN):
+# ============================== BST =================================
+    t = time.process_time()
+    tree.insert(dic[i])
+    v = tree[dic[i][0]]
+    t = time.process_time() - t
+    t_tree[i] = t
+# =========================== Hash Table (Chain)======================
+    t = time.process_time()
+    c[dic[i][0]] = dic[i][1]
+    v = c[dic[i][0]]
+    t = time.process_time() - t
+    t_c[i] = t
+# =========================== Hash Table (Chain)======================
+    t = time.process_time()
+    p[dic[i][0]] = dic[i][1]
+    v = p[dic[i][0]]
+    t = time.process_time() - t
+    t_p[i] = t
+# ====================================================================
+
 
 # ===========================plot==============================================
 plt.plot(t_tree, 'r')
