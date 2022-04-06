@@ -1,6 +1,9 @@
 import random
 from random import shuffle, randrange
 from collections.abc import MutableMapping
+import time
+from matplotlib import pyplot as plt
+
 
 #1) BST (binary search tree)
 class BST:
@@ -275,29 +278,47 @@ class ProbeHashMap(HashMapBase):
         for j in range(len(self._table)):
             if not self._is_available(j):
                 yield self._table[j]._key
-LEN = 10
+LEN = 10000
 keys = list(range(LEN))
 shuffle(keys)
-
+t_tree = [None] * LEN
+t_c = [None] * LEN
+t_p = [None] * LEN
+t_s = [None] * LEN
 
 dic = []
 for key in keys:
     dic.append((key, random.random()))
 
 # ===========================insertion for BST==============================
-# tree = BST()
-# for item in dic:
-#     tree.insert(item)
+tree = BST()
+for i in range(LEN):
+    t = time.process_time()
+    tree.insert(dic[i])
+    t = time.process_time() - t
+    t_tree[i] = t
 # =============================================================================
 
 # ===========================insertion for  Hash Table (Chain)=================
-# c = ChainHashMap()
-# for item in dic:
-#     c[item[0]] = item[1]
+c = ChainHashMap()
+for i in range(LEN):
+    t = time.process_time()
+    c[item[0]] = item[1]
+    t = time.process_time() - t
+    t_c[i] = t
 # =============================================================================
 
 # ===========================insertion for  Hash Table (Chain)=================
-# p = ProbeHashMap()
-# for item in dic:
-#     p[item[0]] = item[1]
+p = ProbeHashMap()
+for i in range(LEN):
+    t = time.process_time()
+    p[item[0]] = item[1]
+    t = time.process_time() - t
+    t_p[i] = t
 # =============================================================================
+
+# ===========================plot==============================================
+plt.plot(t_tree, 'r')
+plt.plot(t_c, 'b')
+plt.plot(t_p, 'g')
+# plt.plot(t_s, 'm')
