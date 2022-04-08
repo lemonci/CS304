@@ -19,7 +19,7 @@ topsort(){
     }
 }
 
-Time Complextity O(V^2)
+Time Complexity O(V^2)
 
 Optimize findVertexOfIndegreeZero():
 topSort(){
@@ -57,7 +57,7 @@ unweighted(vertex s){
          }
     }
 }
-Time Complextity O(V^2)
+Time Complexity O(V^2)
 
 unweighted(Vertex s){
     Queue<vertex> q;
@@ -77,3 +77,86 @@ unweighted(Vertex s){
     }
 }
 Time Complexity O(|V|+|E|)
+
+Dijkstra(G, w, S):
+	initSS(G,S):
+	S = Empty
+	Q = G.V
+	while Q != Empty
+		u = extract_min(Q)
+		S = SU{u}
+		for each vertex V in G.adjacent[u]:
+			Relax(u, v, w)
+			
+Relax(u, v, w):
+	if v.d > u.d + w(u, v):
+		v.d = u.d + w(u, v)
+		v.pi = u
+		
+initSS(G,S):
+	for each vertex v in G.V:
+		V.d = inf
+		V.pi = NIL
+	S.d = 0
+	
+A random graph, initSS creates this table:
+
+V		v.d		v.pi		Known
+1		0		NIL			False
+2		inf		NIL			False
+3		inf		NIL			False
+4		inf		NIL			False
+5		inf		NIL			False
+
+S = {}
+Q = {1, 2, 3, 4 ,5}
+
+u = extract_min(Q)
+u = 1, S = {1}, Q = {2, 3, 4 ,5}
+Update the table
+V		v.d		v.pi		Known
+1		0		NIL			True
+2		4		1			False
+3		inf		NIL			False
+4		6		1			False
+5		7		1			False
+
+u = 2, S = {1, 2}, Q = {3, 4 ,5}
+Update the table
+V		v.d		v.pi		Known
+1		0		NIL			True
+2		4		1			True
+3		4+3		2			False
+4		4+1		2			False
+5		4+1		2			False
+
+u = 3, S = {1, 2, 3}, Q = {4 ,5}
+Update the table
+V		v.d		v.pi		Known
+1		0		NIL			True
+2		4		1			True
+3		4+3		2			False
+4		4+1		2			False
+5		4+1		2			False
+
+u = 4, S = {1, 2, 3, 4}, Q = {5}
+Update the table
+V		v.d		v.pi		Known
+1		0		NIL			True
+2		4		1			True
+3		4+3		2			False
+4		4+1		2			True
+5		4+1		2			False
+
+u = 5, S = {1, 2, 3, 4, 5}, Q = Empty
+Update the table
+V		v.d		v.pi		Known
+1		0		NIL			True
+2		4		1			True
+3		4+3		2			False
+4		4+1		2			True
+5		4+1		2			False
+
+Time Complexity: depends on the datas structure of Queue.
+If array O(v^2) + O(E), if heap: O(log v * v) + O(log v * E) = O(logv (v+E))
+If E < O(v^2/logv), the heap is faster.
