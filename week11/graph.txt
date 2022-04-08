@@ -160,3 +160,19 @@ V		v.d		v.pi		Known
 Time Complexity: depends on the datas structure of Queue.
 If array O(v^2) + O(E), if heap: O(log v * v) + O(log v * E) = O(logv (v+E))
 If E < O(v^2/logv), the heap is faster.
+
+def shortest_path_tree(g, s, d):
+	"""reconstruct shortest path tree rooted at vertex s, given distance map d 
+	return tree as a map from each reachable vertex v (other than source) to 
+	the edge e = (u, v), that is used to reach v from its parent u in the tree
+	
+	"""
+	tree = {}
+	for v in d:
+		if v is not s:
+			for e in g.incident_edges(v, False):
+				u = e.opposite(v)
+				wgt = e.element()
+				if d[v] == d[u] + wgt:
+					tree[v] = e
+	return tree
