@@ -5,17 +5,17 @@ O(g(n)) = {f(n): ∃ positive constants c_1, n_0 such that 0<=f(n)<=c_1g(n) ∀ 
 Every Θ(g(n)) is O(g(n)).
 Ω(g(n))
 
-Insertion sort							Cost		Times
-for j = 2 to A.length:					C_1			n
-	key  = A[j]							C_2			n-1
-	# insert A[j] into 					0
-	# sorted subsequence A[1..j-1]
-	i = j - 1							C_4			n-1
-	while i > 0 and A[i] > key:			C_5			Σt_j, j = 2...n
-		A[i+1] = A[j]					C_6			Σt_{j-1}, j = 2...n
-		i = i - 1						C_7			Σt_{j-1}, j = 2...n
-	A[i+1] = key						C_8			n-1
-	
+Insertion sort                          Cost        Times
+for j = 2 to A.length:                  C_1         n
+    key  = A[j]                         C_2         n-1
+    # insert A[j] into                  0
+    # sorted subsequence A[1..j-1]
+    i = j - 1                           C_4         n-1
+    while i > 0 and A[i] > key:         C_5         Σt_j, j = 2...n
+        A[i+1] = A[j]                   C_6         Σt_{j-1}, j = 2...n
+        i = i - 1                       C_7         Σt_{j-1}, j = 2...n
+    A[i+1] = key                        C_8         n-1
+    
 Arrays
 Compact array:
 |c||a||t|
@@ -23,16 +23,16 @@ Referential array:
 |*||*||*| * is a pointer to other places, python uses this as default.
 Advantage of the array
 Mutating of the array(Python list)
-Operation		Time
-data[i]=v		O(1)
-data.append(v)	O(1)*
-data.remove(v)	O(n)*
+Operation       Time
+data[i]=v       O(1)
+data.append(v)  O(1)*
+data.remove(v)  O(n)*
 It is costly to randomly insert sth into a random location in the array, as everything behind that location needs to be moved.
 
 Linked list
 Implementation (may ask in the exam)
 n_2 = new node
-n_2->next = n_1->next	/*Always assign the next of the new node first, otherwise that location will be lost*/
+n_2->next = n_1->next   /*Always assign the next of the new node first, otherwise that location will be lost*/
 n_1->next = n_2
 
 Doubly linked list
@@ -53,36 +53,36 @@ Merge Sort(Divide and Conquer)
 2) conquer sub-problems by solving recursively, if the problem is small enough, just solve it straight-forwardly.
 3) combine the solution to subproblems into solution for the original problem.
 
-mergesort(A, p, r)		# Total complexity O(n*log(n))
-	if p < r:
-		q = (p+r)/2
-		mergesort(A,p,q)
-		mergesort(A,q+1,r)
-		merge(A,p,q,r)	#O(n), Russel will give out this function in the paper.
-		
+mergesort(A, p, r)      # Total complexity O(n*log(n))
+    if p < r:
+        q = (p+r)/2
+        mergesort(A,p,q)
+        mergesort(A,q+1,r)
+        merge(A,p,q,r)  #O(n), Russel will give out this function in the paper.
+        
 BSTs
-	6
+    6
    / \
   4   7
  / \   \
 2   5   8
-findmin		O(log(n))
-find(7)		O(log(n))	# for a balanced tree
-insert(3)	O(log(n))
-delete(8)				# complicated, depends on how many children the node to be deleted has
-						# if no child, just delete
-						# if 1 child, replace the node with the child
-						# if 2 children, find the successor (the next larger) of the node.
-						# 	if the successor is the right child of the node, replace the successor with the node to be deleted.
-						#	if the successor is not the right child of the node, set the node of the successor to NULL and replace the node to be deleted to be the successor.
-						
-AVL tree	# will examine insertions and self balance process
+findmin     O(log(n))
+find(7)     O(log(n))   # for a balanced tree
+insert(3)   O(log(n))
+delete(8)               # complicated, depends on how many children the node to be deleted has
+                        # if no child, just delete
+                        # if 1 child, replace the node with the child
+                        # if 2 children, find the successor (the next larger) of the node.
+                        #   if the successor is the right child of the node, replace the successor with the node to be deleted.
+                        #   if the successor is not the right child of the node, set the node of the successor to NULL and replace the node to be deleted to be the successor.
+                        
+AVL tree    # will examine insertions and self balance process
 For every node in the tree, height of left and right subtree differs by at most 1.
 Single roation: encounter the case that the unbalance is caused by the left subtree's left child, or right subtree's right child.
 Double rotation: the other cases, do single rotation twice.
 
-Heap	# will examine the bubble up/down process
-	1
+Heap    # will examine the bubble up/down process
+    1
    / \
   2   3
  / \   
@@ -93,12 +93,12 @@ How to keep the same property of the heap?
 Insertion: Just insert the element to the next available location, then bubble it up (swapping until the newly inserted element is greater than its parent.)
 Deletion of the root: Put the element from last location to the root, and bubble it down (swapping until the "new root" is less than its children).
 
-Hash Function	# will examine the output of hash functions and collusion resolution
+Hash Function   # will examine the output of hash functions and collusion resolution
 Compute every input and base on some function, output a hash code(value).
 Then use a compresion function to push the hash code into an array or table.
 Map strings into indices of the data strucuture.
-e.g.	'asdf'
-		dict['asdf'] = 1
+e.g.    'asdf'
+        dict['asdf'] = 1
 
 collusion resolution
 1) seperate chaining
