@@ -90,9 +90,9 @@ class BST:
         
     def __setitem__(self, key, val):
         pair_n = (key, val)
-        if !self.exists(key):
+        try:
             self.insert(pair_n)
-        else:
+        except:
             if key == self.pair[0]:
                 self.pair = pair_n
                 return
